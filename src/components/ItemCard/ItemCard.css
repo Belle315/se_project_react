@@ -1,0 +1,33 @@
+.item-card {
+  width: 325px;
+  height: 328px;
+  background-color: #e7e5e5;
+  border-radius: 12px;
+  border: 1px solid #797676;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  cursor: pointer;
+  overflow: hidden;
+  margin: 0;
+  padding: 0;
+  gap: 21px;
+  list-style-type: none;
+  position: relative;
+}
+
+.item-card__image {
+  width: 100%;
+  height: 140px;
+  object-fit: cover;
+  border: none;
+}
+
+.item-card__name {
+  position: absolute;
+  top: -5px;
+  left: 128px;
+  justify-content: center;
+  background-color: rgba(0, 0, 0, 0.6);
+  background-color: #fff;
+}

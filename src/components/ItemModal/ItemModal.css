@@ -1,0 +1,49 @@
+.modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  display: none;
+}
+
+.modal__content {
+  background: white;
+  border-radius: 12px;
+  padding: 20px;
+  width: 320px;
+  position: relative;
+}
+
+.modal__close {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+}
+
+.modal_is-opened {
+  display: flex;
+}
+
+.modal__image {
+  width: 100%;
+  border-radius: 8px;
+}
+
+.modal__info {
+  margin-top: 16px;
+}
+
+.modal__name {
+  font-size: 20px;
+  font-weight: 600;
+}
+
+.modal__weather {
+  font-size: 16px;
+  color: #555;
+}
