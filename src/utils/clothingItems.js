@@ -1,11 +1,11 @@
 import hat from "../assets/hat.svg";
 import sneakers from "../assets/sneakers.svg";
 import tshirt from "../assets/tshirt.svg";
-import RedShorts from "../assets/RedShorts.svg";
+import redShorts from "../assets/RedShorts.svg";
 import coat from "../assets/coat.png";
 import hoodie from "../assets/hoodie.jpg";
 import boots from "../assets/Boots.jpg";
-import Sandals from "../assets/sandals.jpg";
+import sandals from "../assets/sandals.jpg";
 
 export const defaultClothingItems = [
   {

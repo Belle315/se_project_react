@@ -16,9 +16,13 @@ function Main({ weatherData, clothingItems, onSelectCard }) {
       <WeatherCard temperature={weatherData?.temperature} />
 
       <section className="main__clothes-section">
-        <p className="main__title">
-          Today is {weatherData?.temperature}°F / You may want to wear:
-        </p>
+        {weatherData?.temperature !== undefined ? (
+          <p className="main__title">
+            Today is {weatherData.temperature}°F / You may want to wear:
+          </p>
+        ) : (
+          <p className="main__title">Loading weather…</p>
+        )}
 
         <ul className="main__cards">
           {filteredItems.map((item) => (

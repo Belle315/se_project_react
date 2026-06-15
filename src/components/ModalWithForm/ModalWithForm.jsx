@@ -9,6 +9,7 @@ function ModalWithForm({
   isOpen,
   onClose,
   onSubmit,
+  isDisabled,
 }) {
   // ESC key close
   useEffect(() => {
@@ -42,7 +43,11 @@ function ModalWithForm({
         <form className="modal__form" name={name} onSubmit={onSubmit}>
           {children}
 
-          <button type="submit" className="modal__submit">
+          <button
+            type="submit"
+            className={`modal__submit ${isDisabled ? "modal__submit_disabled" : ""}`}
+            disabled={isDisabled}
+          >
             {buttonText}
           </button>
         </form>

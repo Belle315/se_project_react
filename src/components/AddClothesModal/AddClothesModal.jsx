@@ -31,22 +31,32 @@ function AddClothesModal({ isOpen, onClose, onAddItem }) {
       onSubmit={handleSubmit}
       isDisabled={!name || !imageUrl || !weather}
     >
-      <label className="modal__label">Name</label>
+      {/* NAME FIELD */}
+      <label htmlFor="name" className="modal__label">
+        Name
+      </label>
       <input
+        id="name"
         type="text"
         className="modal__input"
         placeholder="Name"
         value={name}
         onChange={(e) => setName(e.target.value)}
+        required
       />
 
-      <label className="modal__label">Image URL</label>
+      {/* IMAGE URL FIELD */}
+      <label htmlFor="image-url" className="modal__label">
+        Image URL
+      </label>
       <input
+        id="image-url"
         type="url"
         className="modal__input"
         placeholder="Image URL"
         value={imageUrl}
         onChange={(e) => setImageUrl(e.target.value)}
+        required
       />
 
       <p className="modal__label">Select the weather type:</p>

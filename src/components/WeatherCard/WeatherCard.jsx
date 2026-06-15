@@ -1,10 +1,15 @@
 import "./WeatherCard.css";
-import weatherImage from "../../assets/group119.svg";
+import weatherImage from "../../assets/Group119.svg";
 
 function WeatherCard({ temperature }) {
+  const isReady = temperature !== undefined && temperature !== null;
+
   return (
     <section className="weather-card">
-      <div className="weather-card__temp">{temperature}°F</div>
+      <div className="weather-card__temp">
+        {isReady ? `${temperature}°F` : "Loading..."}
+      </div>
+
       <img
         src={weatherImage}
         alt="Weather background"
