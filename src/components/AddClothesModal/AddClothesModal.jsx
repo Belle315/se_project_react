@@ -10,7 +10,7 @@ function AddClothesModal({ isOpen, onClose, onAddItem }) {
   const handleSubmit = (e) => {
     e.preventDefault();
     onAddItem({
-      _id: Date.now(),
+      id: Date.now(),
       name,
       imageUrl,
       weather,
@@ -47,7 +47,7 @@ function AddClothesModal({ isOpen, onClose, onAddItem }) {
 
       {/* IMAGE URL FIELD */}
       <label htmlFor="image-url" className="modal__label">
-        Image URL
+        Image
       </label>
       <input
         id="image-url"

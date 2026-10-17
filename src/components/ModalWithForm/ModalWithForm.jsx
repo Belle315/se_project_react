@@ -25,27 +25,34 @@ function ModalWithForm({
 
   // Overlay click close
   const handleOverlay = (e) => {
-    if (e.target.classList.contains("modal")) {
+    if (e.target.classList.contains("form-modal")) {
       onClose();
     }
   };
 
   return (
     <div
-      className={`modal modal_type_${name} ${isOpen ? "modal_is-opened" : ""}`}
+      className={`form-modal form-modal_type_${name} ${isOpen ? "form-modal_is-opened" : ""}`}
       onClick={handleOverlay}
     >
-      <div className="modal__content">
-        <button className="modal__close" onClick={onClose}></button>
+      <div className="form-modal__content">
+        <button
+          type="button"
+          className="form-modal__close"
+          onClick={onClose}
+          aria-label="Close Popup"
+        >
+          &times;
+        </button>
 
-        <h2 className="modal__title">{title}</h2>
+        <h2 className="form-modal__title">{title}</h2>
 
-        <form className="modal__form" name={name} onSubmit={onSubmit}>
+        <form className="form-modal__form" name={name} onSubmit={onSubmit}>
           {children}
 
           <button
             type="submit"
-            className={`modal__submit ${isDisabled ? "modal__submit_disabled" : ""}`}
+            className={`form-modal__submit ${isDisabled ? "form-modal__submit_disabled" : ""}`}
             disabled={isDisabled}
           >
             {buttonText}

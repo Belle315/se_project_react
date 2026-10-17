@@ -4,41 +4,80 @@ import Header from "../Header/Header";
 import Main from "../Main/Main";
 import ItemModal from "../ItemModal/ItemModal";
 import AddClothesModal from "../AddClothesModal/AddClothesModal";
-import { defaultClothingItems } from "../../utils/clothingItems.js";
 import Footer from "../Footer/Footer";
 import { getWeather } from "../../utils/WeatherApi.js";
 import { coordinates } from "../../utils/constants";
+import CurrentTemperatureUnitContext from "../../contexts/CurrentTemperatureUnitContext";
+import { Routes, Route } from "react-router-dom";
+import Profile from "../Profile/Profile";
 
 function App() {
   const [activeModal, setActiveModal] = useState("");
   const [selectedCard, setSelectedCard] = useState(null);
 
-  const [clothingItems, setClothingItems] = useState(defaultClothingItems);
-
+  const [clothingItems, setClothingItems] = useState([]);
   const [weatherData, setWeatherData] = useState({});
-  const handleAddItem = (newItem) => {
-    setClothingItems([{ _id: Date.now(), ...newItem }, ...clothingItems]);
+  const [currentTemperatureUnit, setCurrentTemperatureUnit] = useState("F");
+  const handleToggleSwitchChange = () => {
+    setCurrentTemperatureUnit((prev) => (prev === "F" ? "C" : "F"));
   };
 
+  const handleAddItem = (newItem) => {
+    const itemToSave = { ...newItem, id: Date.now() };
+
+    fetch("http://localhost:3001/clothingItems", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(itemToSave),
+    })
+      .then((res) => res.json())
+      .then((savedItem) => {
+        setClothingItems((prev) => [savedItem, ...prev]);
+      })
+      .catch((err) => console.error("Error adding item:", err));
+  };
+
+  // WEATHER FETCH
   useEffect(() => {
     getWeather(coordinates.latitude, coordinates.longitude)
       .then((data) => {
+        const tempF = Math.round(data.main.temp);
+        const tempC = Math.round((data.main.temp - 32) * (5 / 9));
+
         setWeatherData({
           city: data.name,
-          temperature: Math.round(data.main.temp),
-          type:
-            data.main.temp >= 86
-              ? "hot"
-              : data.main.temp >= 66
-                ? "warm"
-                : "cold",
+          temperature: {
+            F: tempF,
+            C: tempC,
+          },
+          type: tempF >= 86 ? "hot" : tempF >= 66 ? "warm" : "cold",
         });
       })
       .catch((err) => console.error(err));
   }, []);
 
+  // LOAD ITEMS FROM DB.JSON
+  useEffect(() => {
+    fetch("http://localhost:3001/clothingItems")
+      .then((res) => res.json())
+      .then(setClothingItems)
+      .catch((err) => console.error("Error loading items:", err));
+  }, []);
+
   const handleAddClothesClick = () => {
     setActiveModal("add-garment");
+  };
+
+  const handleDeleteItem = (id) => {
+    fetch(`http://localhost:3001/clothingItems/${id}`, {
+      method: "DELETE",
+    })
+      .then(() => {
+        setClothingItems((prevItems) =>
+          prevItems.filter((item) => item.id !== id),
+        );
+      })
+      .catch((err) => console.error("Error deleting item:", err));
   };
 
   const handleSelectCard = (card) => {
@@ -48,31 +87,57 @@ function App() {
 
   return (
     <div className="page">
-      <div className="page__content">
-        <Header
-          onAddClothesClick={handleAddClothesClick}
-          weatherData={weatherData}
-        />
+      <CurrentTemperatureUnitContext.Provider
+        value={{ currentTemperatureUnit, handleToggleSwitchChange }}
+      >
+        <div className="page__content">
+          <Header
+            onAddClothesClick={handleAddClothesClick}
+            weatherData={weatherData}
+          />
 
-        <Main
-          weatherData={weatherData}
-          clothingItems={clothingItems}
-          onSelectCard={handleSelectCard}
-        />
+          <Routes>
+            <Route
+              path="/"
+              element={
+                <Main
+                  weatherData={weatherData}
+                  clothingItems={clothingItems}
+                  onSelectCard={handleSelectCard}
+                  onDeleteItem={handleDeleteItem}
+                />
+              }
+            />
 
-        <Footer />
+            <Route
+              path="/profile"
+              element={
+                <Profile
+                  clothingItems={clothingItems}
+                  onSelectCard={handleSelectCard}
+                  onAddClothesClick={handleAddClothesClick}
+                  onDeleteItem={handleDeleteItem}
+                />
+              }
+            />
+          </Routes>
 
-        <ItemModal
-          card={selectedCard}
-          isOpen={activeModal === "preview"}
-          onClose={() => setActiveModal("")}
-        />
-        <AddClothesModal
-          isOpen={activeModal === "add-garment"}
-          onClose={() => setActiveModal("")}
-          onAddItem={handleAddItem}
-        />
-      </div>
+          <Footer />
+
+          <ItemModal
+            card={selectedCard}
+            isOpen={activeModal === "preview"}
+            onClose={() => setActiveModal("")}
+            onDeleteItem={handleDeleteItem}
+          />
+
+          <AddClothesModal
+            isOpen={activeModal === "add-garment"}
+            onClose={() => setActiveModal("")}
+            onAddItem={handleAddItem}
+          />
+        </div>
+      </CurrentTemperatureUnitContext.Provider>
     </div>
   );
 }

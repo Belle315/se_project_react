@@ -1,7 +1,8 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import "./ItemModal.css";
 
-function ItemModal({ card, isOpen, onClose }) {
+function ItemModal({ card, isOpen, onClose, onDeleteItem }) {
+  const [showConfirm, setShowConfirm] = useState(false);
   useEffect(() => {
     if (!isOpen) return;
 
@@ -34,6 +35,51 @@ function ItemModal({ card, isOpen, onClose }) {
             <div className="modal__info">
               <h2 className="modal__name">{card.name}</h2>
               <p className="modal__weather">Weather: {card.weather}</p>
+
+              <button
+                className="modal__delete-btn"
+                onClick={() => {
+                  setShowConfirm(true);
+                }}
+              >
+                Delete Item
+              </button>
+              {showConfirm && (
+                <div className="confirm-overlay">
+                  <div className="confirm-modal">
+                    <button
+                      className="confirm-close"
+                      onClick={() => setShowConfirm(false)}
+                    >
+                      ×
+                    </button>
+
+                    <h2>
+                      Are you sure you want to delete this item?
+                      <br />
+                      This action is irreversible.
+                    </h2>
+
+                    <button
+                      className="confirm-delete"
+                      onClick={() => {
+                        onDeleteItem(card.id);
+                        setShowConfirm(false);
+                        onClose();
+                      }}
+                    >
+                      Yes, delete item
+                    </button>
+
+                    <button
+                      className="confirm-cancel"
+                      onClick={() => setShowConfirm(false)}
+                    >
+                      Cancel
+                    </button>
+                  </div>
+                </div>
+              )}
             </div>
           </>
         )}
