@@ -4,7 +4,10 @@ import "./ItemModal.css";
 function ItemModal({ card, isOpen, onClose, onDeleteItem }) {
   const [showConfirm, setShowConfirm] = useState(false);
   useEffect(() => {
-    if (!isOpen) return;
+    if (!isOpen) {
+      setShowConfirm(false);
+      return;
+    }
 
     const handleEsc = (e) => {
       if (e.key === "Escape") onClose();

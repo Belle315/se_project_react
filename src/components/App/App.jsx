@@ -1,15 +1,16 @@
 import { useState, useEffect } from "react";
 import "./App.css";
-import Header from "../Header/Header";
-import Main from "../Main/Main";
+import Header from "./Header/Header";
+import Main from "./Main/Main";
 import ItemModal from "../ItemModal/ItemModal";
 import AddClothesModal from "../AddClothesModal/AddClothesModal";
-import Footer from "../Footer/Footer";
+import Footer from "./Footer/Footer";
 import { getWeather } from "../../utils/WeatherApi.js";
 import { coordinates } from "../../utils/constants";
 import CurrentTemperatureUnitContext from "../../contexts/CurrentTemperatureUnitContext";
 import { Routes, Route } from "react-router-dom";
-import Profile from "../Profile/Profile";
+import Profile from "./Profile/Profile";
+import { getItems, addItem, deleteItem } from "../../utils/api";
 
 function App() {
   const [activeModal, setActiveModal] = useState("");
@@ -25,12 +26,7 @@ function App() {
   const handleAddItem = (newItem) => {
     const itemToSave = { ...newItem, id: Date.now() };
 
-    fetch("http://localhost:3001/clothingItems", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(itemToSave),
-    })
-      .then((res) => res.json())
+    addItem(itemToSave)
       .then((savedItem) => {
         setClothingItems((prev) => [savedItem, ...prev]);
       })
@@ -58,8 +54,7 @@ function App() {
 
   // LOAD ITEMS FROM DB.JSON
   useEffect(() => {
-    fetch("http://localhost:3001/clothingItems")
-      .then((res) => res.json())
+    getItems()
       .then(setClothingItems)
       .catch((err) => console.error("Error loading items:", err));
   }, []);
@@ -69,9 +64,7 @@ function App() {
   };
 
   const handleDeleteItem = (id) => {
-    fetch(`http://localhost:3001/clothingItems/${id}`, {
-      method: "DELETE",
-    })
+    deleteItem(id)
       .then(() => {
         setClothingItems((prevItems) =>
           prevItems.filter((item) => item.id !== id),

@@ -1,14 +1,10 @@
 import "./Header.css";
-import avatarImage from "../../assets/chibi.svg";
-import logo from "../../assets/wtwrLogo.svg";
-import ToggleSwitch from "../ToggleSwitch/ToggleSwitch";
-import { useContext } from "react";
-import CurrentTemperatureUnitContext from "../../contexts/CurrentTemperatureUnitContext";
+import avatarImage from "../../../assets/chibi.svg";
+import logo from "../../../assets/wtwrLogo.svg";
+import ToggleSwitch from "../../ToggleSwitch/ToggleSwitch";
 import { Link } from "react-router-dom";
 
 function Header({ onAddClothesClick, weatherData }) {
-  const { currentTemperatureUnit } = useContext(CurrentTemperatureUnitContext);
-
   const currentDate = new Date().toLocaleString("default", {
     month: "long",
     day: "numeric",

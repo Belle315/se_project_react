@@ -1,135 +1,130 @@
-# React + Vite
-
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
-
-Currently, two official plugins are available:
-
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
-
 # WTWR — What To Wear?
 
-WTWR is a weather‑based clothing recommendation app built with React and Vite.  
-It helps users decide what to wear based on the current weather in their location.  
-Users can view clothing items, open item previews, and add new garments through a modal form.
+WTWR is a weather-based clothing recommendation application built using React and Vite. The application helps users choose clothing suitable for the current weather while allowing them to manage their personal clothing collection.
 
----
+## Features
 
-## ✨ Features
+- Displays current weather information using the OpenWeatherMap API.
+- Allows users to switch between Fahrenheit and Celsius.
+- Recommends clothing based on hot, warm, or cold weather.
+- Displays clothing cards with images and names.
+- Opens a detailed preview when a clothing card is selected.
+- Allows users to add and delete garments.
+- Includes a confirmation dialog before deleting an item.
+- Saves clothing data using `json-server` and `db.json`.
+- Provides a profile page with clothing pagination.
+- Supports responsive layouts.
 
-- Real‑time weather display (temperature in Fahrenheit)
-- Weather‑based clothing recommendations
-- Clothing card grid with images and titles
-- Clickable clothing cards that open a preview modal and shows weather type the item is good for (later on can have things like brand color size per the users description)
-- Add new garments using a reusable modal form
-- Responsive layout
-- Component‑based architecture
+## Technologies Used
 
----
-
-## 🧩 Technologies Used
-
-- React (functional components + hooks)
-- Vite
+- React
 - JavaScript (ES6+)
-- CSS (component‑based styling)
-- Normalize.css
+- Vite
+- CSS
+- React Router
+- React Hooks and Context API
 - OpenWeatherMap API
-- Prettier (code formatting)
+- JSON Server
+- ESLint
+- Prettier
 
----
+## Project Structure
 
-## 📁 Project Structure
+The application uses reusable React components organized within the `src/components` directory.
 
-src/  
- assets/
-blocks/
-components/  
- App/  
- Header/  
- Main/  
- Footer/  
- ItemCard/  
- ItemModal/  
- AddClothesModal/  
- ModalWithForm/  
- WeatherCard/  
- utils/  
- clothingItems.js  
- constants.js  
- weatherApi.js  
- assets/  
- images/  
- index.css  
- main.jsx
+Key components include:
 
-public/  
-index.html
+- **App** — Manages application state, routing, and API interactions.
+- **Header** — Displays navigation, date, city, and temperature toggle.
+- **Main** — Filters and displays clothing recommendations.
+- **WeatherCard** — Displays the current temperature.
+- **ItemCard** — Displays individual clothing items.
+- **ItemModal** — Displays clothing previews and deletion confirmation.
+- **AddClothesModal** — Handles adding new garments.
+- **ModalWithForm** — Provides reusable modal form structure.
+- **Profile** — Displays the user's clothing collection.
+- **ClothesSection** — Displays garments with pagination.
+- **SideBar** — Displays profile information.
+- **ToggleSwitch** — Changes the displayed temperature unit.
 
----
+Additional application files include:
 
-## 🧠 Key Functionality
+- `src/utils/api.js` — Handles clothing API requests.
+- `src/utils/WeatherApi.js` — Fetches weather information.
+- `src/hooks/useForm.js` — Manages form input values.
+- `src/contexts/CurrentTemperatureUnitContext.js` — Provides temperature-unit state.
+- `db.json` — Stores clothing data for the local mock API.
 
-### App.jsx
+## API Integration
 
-- Stores weather data
-- Stores clothing items
-- Controls which modal is open
-- Renders Header, Main, Footer, ItemModal, AddClothesModal
+WTWR communicates with two APIs.
 
-### Header
+**OpenWeatherMap API**
 
-- Displays city and current date
-- “Add Clothes” button opens modal
-- "Add clothes" also closes with background touch or press of the esc key
-- ( later on user will be able to change their name and profile icon )
+Retrieves weather information including the current temperature and city. The application uses this information to recommend clothing suitable for the weather.
 
-### Main
+**JSON Server**
 
-- Renders WeatherCard and clothing grid
-- Filters clothing by weather type
-- (would be great to get the cards to make matching outfits that are eye pleasing instead of just a random suggestion )
+Provides a local mock REST API for clothing data.
 
-### WeatherCard
+- GET — Retrieves saved clothing items.
+- POST — Adds new clothing items.
+- DELETE — Removes clothing items.
 
-- Displays temperature in Fahrenheit
-- Shows weather background image
-- (will later show the time and weather change and during AM or PM)
+## Getting Started
 
-### ItemCard
+Clone the repository:
 
-- Shows clothing image and title
-- Opens preview modal on click
-- Closes on background click or esc key touch
+```bash
+git clone YOUR_REPOSITORY_URL
+```
 
-### ItemModal
+Navigate into the project:
 
-- Shows enlarged item image and title ( will later be changed to allow the user to rename their clothing item to whatever they choose)
-
-### AddClothesModal
-
-- Reusable form modal using ModalWithForm
-- Adds new clothing items to the main page, allows the user to click trough and view each item
-
-### ModalWithForm
-
-- Handles overlay click, ESC close, submit button, and layout
-
----
-
-## 🌦 Weather API
-
-The project uses OpenWeatherMap to fetch:
-
-- Temperature
-- Weather conditions
-- City name
-
-API logic is stored in:
-src/utils/weatherApi.js
-
----
-
-## 🚀 Getting Started
+```bash
+cd se_project_react
+```
 
 Install dependencies:
+
+```bash
+npm install
+```
+
+Configure an active OpenWeatherMap API key in the project's weather API configuration.
+
+Start the development environment:
+
+```bash
+npm run dev
+```
+
+This starts Vite and the local JSON Server, which serves clothing data on port 3001.
+
+## Testing and Build
+
+Run ESLint:
+
+```bash
+npm run lint
+```
+
+Create a production build:
+
+```bash
+npm run build
+```
+
+## Future Improvements
+
+Planned improvements include:
+
+- Creating complete outfit recommendations based on clothing combinations.
+- Allowing users to edit garment names and descriptions.
+- Supporting additional garment details such as brand, color, and size.
+- Allowing users to customize their profile information.
+- Displaying additional weather information.
+
+## Developer
+
+Developed by Jennifer Rivera — 2026.

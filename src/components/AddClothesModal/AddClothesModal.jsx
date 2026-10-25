@@ -1,11 +1,15 @@
-import React, { useState } from "react";
+import { useForm } from "../../hooks/useForm";
 import ModalWithForm from "../ModalWithForm/ModalWithForm";
 import "./AddClothesModal.css";
 
 function AddClothesModal({ isOpen, onClose, onAddItem }) {
-  const [name, setName] = useState("");
-  const [imageUrl, setImageUrl] = useState("");
-  const [weather, setWeather] = useState("");
+  const { values, handleChange, resetForm } = useForm({
+    name: "",
+    imageUrl: "",
+    weather: "",
+  });
+
+  const { name, imageUrl, weather } = values;
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -15,10 +19,7 @@ function AddClothesModal({ isOpen, onClose, onAddItem }) {
       imageUrl,
       weather,
     });
-    setName("");
-    setImageUrl("");
-    setWeather("");
-    onClose();
+    resetForm();
   };
 
   return (
@@ -41,7 +42,8 @@ function AddClothesModal({ isOpen, onClose, onAddItem }) {
         className="modal__input"
         placeholder="Name"
         value={name}
-        onChange={(e) => setName(e.target.value)}
+        name="name"
+        onChange={handleChange}
         required
       />
 
@@ -55,7 +57,8 @@ function AddClothesModal({ isOpen, onClose, onAddItem }) {
         className="modal__input"
         placeholder="Image URL"
         value={imageUrl}
-        onChange={(e) => setImageUrl(e.target.value)}
+        name="imageUrl"
+        onChange={handleChange}
         required
       />
 
@@ -68,7 +71,7 @@ function AddClothesModal({ isOpen, onClose, onAddItem }) {
             name="weather"
             value="hot"
             checked={weather === "hot"}
-            onChange={(e) => setWeather(e.target.value)}
+            onChange={handleChange}
           />
           Hot
         </label>
@@ -79,7 +82,7 @@ function AddClothesModal({ isOpen, onClose, onAddItem }) {
             name="weather"
             value="warm"
             checked={weather === "warm"}
-            onChange={(e) => setWeather(e.target.value)}
+            onChange={handleChange}
           />
           Warm
         </label>
@@ -90,7 +93,7 @@ function AddClothesModal({ isOpen, onClose, onAddItem }) {
             name="weather"
             value="cold"
             checked={weather === "cold"}
-            onChange={(e) => setWeather(e.target.value)}
+            onChange={handleChange}
           />
           Cold
         </label>
