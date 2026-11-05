@@ -1,0 +1,35 @@
+.main {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+  background-color: #f2f2f2;
+}
+
+/* Clothes section */
+
+.main__clothes-section {
+  width: 100%;
+  margin: 0;
+  padding: 0 24px;
+  box-sizing: border-box;
+}
+
+.main__title {
+  font-weight: 500;
+  font-family: Cabinet Grotesk;
+  font-weight: 700;
+  font-style: Bold;
+  font-size: 20px;
+  line-height: 100%;
+  letter-spacing: 0%;
+}
+
+/* Clothing cards list */
+.main__cards {
+  display: grid;
+  grid-template-columns: repeat(4, 325px);
+  gap: 20px;
+  list-style: none;
+  padding: 0;
+  margin: 34px 0 0;
+}
