@@ -15,6 +15,10 @@ WTWR is a weather-based clothing recommendation application built using React an
 - Provides a profile page with clothing pagination.
 - Supports responsive layouts.
 
+## Pitch Video
+
+https://drive.google.com/file/d/1wYc6WAnf8r34xuzVRbUtl5NvzWy_jMpM/view?usp=sharing
+
 ## Technologies Used
 
 - React
