@@ -26,11 +26,16 @@ function App() {
   const handleAddItem = (newItem) => {
     const itemToSave = { ...newItem, id: Date.now() };
 
-    addItem(itemToSave)
+    return addItem(itemToSave)
       .then((savedItem) => {
         setClothingItems((prev) => [savedItem, ...prev]);
+        setActiveModal("");
+        return savedItem;
       })
-      .catch((err) => console.error("Error adding item:", err));
+      .catch((err) => {
+        console.error("Error adding item:", err);
+        throw err;
+      });
   };
 
   // WEATHER FETCH
@@ -64,13 +69,16 @@ function App() {
   };
 
   const handleDeleteItem = (id) => {
-    deleteItem(id)
+    return deleteItem(id)
       .then(() => {
         setClothingItems((prevItems) =>
           prevItems.filter((item) => item.id !== id),
         );
       })
-      .catch((err) => console.error("Error deleting item:", err));
+      .catch((err) => {
+        console.error("Error deleting item:", err);
+        throw err;
+      });
   };
 
   const handleSelectCard = (card) => {

@@ -10,16 +10,13 @@
   position: absolute;
   top: 12px;
   left: 12px;
-  font-size: 28px;
-  font-weight: 600;
   color: white;
   z-index: 2;
-  font-family: Cabinet Grotesk;
+  font-family: "Cabinet Grotesk", sans-serif;
   font-weight: 700;
-  font-style: Bold;
   font-size: 36px;
   line-height: 40px;
-  letter-spacing: 0%;
+  letter-spacing: 0;
   vertical-align: middle;
   margin-top: 8px;
 }

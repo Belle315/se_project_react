@@ -11,15 +11,20 @@ function AddClothesModal({ isOpen, onClose, onAddItem }) {
 
   const { name, imageUrl, weather } = values;
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    onAddItem({
-      id: Date.now(),
-      name,
-      imageUrl,
-      weather,
-    });
-    resetForm();
+
+    try {
+      await onAddItem({
+        name,
+        imageUrl,
+        weather,
+      });
+
+      resetForm();
+    } catch (error) {
+      console.error("Failed to add garment:", error);
+    }
   };
 
   return (
