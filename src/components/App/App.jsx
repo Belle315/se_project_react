@@ -10,6 +10,7 @@ import CurrentTemperatureUnitContext from "../../contexts/CurrentTemperatureUnit
 import { Routes, Route } from "react-router-dom";
 import Profile from "./Profile/Profile";
 import { getItems, addItem, deleteItem } from "../../utils/api";
+import { coordinates } from "../../utils/constants";
 
 function App() {
   const [activeModal, setActiveModal] = useState("");
@@ -38,33 +39,21 @@ function App() {
 
   // WEATHER FETCH
   useEffect(() => {
-    if (!navigator.geolocation) {
-      console.error("Geolocation is not supported by this browser.");
-      return;
-    }
+    getWeather(coordinates.latitude, coordinates.longitude)
+      .then((data) => {
+        const tempF = Math.round(data.main.temp);
+        const tempC = Math.round((data.main.temp - 32) * (5 / 9));
 
-    navigator.geolocation.getCurrentPosition(
-      ({ coords }) => {
-        getWeather(coords.latitude, coords.longitude)
-          .then((data) => {
-            const tempF = Math.round(data.main.temp);
-            const tempC = Math.round((data.main.temp - 32) * (5 / 9));
-
-            setWeatherData({
-              city: data.name,
-              temperature: {
-                F: tempF,
-                C: tempC,
-              },
-              type: tempF >= 86 ? "hot" : tempF >= 66 ? "warm" : "cold",
-            });
-          })
-          .catch((err) => console.error(err));
-      },
-      (error) => {
-        console.error("Unable to retrieve your location:", error.message);
-      },
-    );
+        setWeatherData({
+          city: data.name,
+          temperature: {
+            F: tempF,
+            C: tempC,
+          },
+          type: tempF >= 86 ? "hot" : tempF >= 66 ? "warm" : "cold",
+        });
+      })
+      .catch((err) => console.error(err));
   }, []);
 
   // LOAD ITEMS FROM DB.JSON
